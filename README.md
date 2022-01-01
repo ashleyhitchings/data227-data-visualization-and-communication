@@ -1,2 +1,2 @@
-# data227-data-visualization-and-communication
-Data wrangling and visualizations for UChicago data science class
+# Data 22700 Data Visualization and Communication
+*Data wrangling and visualization outputs for UChicago data science class*
