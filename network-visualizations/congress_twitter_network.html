@@ -1,0 +1,131 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#fda2a4", "id": 10615232, "label": "Chuck Grassley", "shape": "dot", "size": 6, "title": "Chuck Grassley | Followers: 94236 | Degree: 14"}, {"color": "#fda2a4", "id": 22509548, "label": "Darrell E. Issa", "shape": "dot", "size": 8, "title": "Darrell E. Issa | Followers: 207625 | Degree: 25"}, {"color": "#fda2a4", "id": 14845376, "label": "Lindsey Graham", "shape": "dot", "size": 6, "title": "Lindsey Graham | Followers: 92156 | Degree: 17"}, {"color": "#fda2a4", "id": 17800215, "label": "Jason Chaffetz", "shape": "dot", "size": 6, "title": "Jason Chaffetz | Followers: 102941 | Degree: 15"}, {"color": "#fda2a4", "id": 13218102, "label": "John Cornyn", "shape": "dot", "size": 5, "title": "John Cornyn | Followers: 71301 | Degree: 25"}, {"color": "#bbd7fe", "id": 7429102, "label": "Mark R. Warner", "shape": "dot", "size": 5, "title": "Mark R. Warner | Followers: 55921 | Degree: 17"}, {"color": "#fda2a4", "id": 19394188, "label": "John McCain", "shape": "dot", "size": 22, "title": "John McCain | Followers: 1988092 | Degree: 19"}, {"color": "#fda2a4", "id": 88784440, "label": "Mike Lee", "shape": "dot", "size": 8, "title": "Mike Lee | Followers: 204352 | Degree: 23"}, {"color": "#fda2a4", "id": 19739126, "label": "Kevin McCarthy", "shape": "dot", "size": 5, "title": "Kevin McCarthy | Followers: 67945 | Degree: 17"}, {"color": "#bbd7fe", "id": 247334603, "label": "Richard J. Durbin", "shape": "dot", "size": 5, "title": "Richard J. Durbin | Followers: 62081 | Degree: 22"}, {"color": "#fda2a4", "id": 217543151, "label": "Tim Scott", "shape": "dot", "size": 6, "title": "Tim Scott | Followers: 108871 | Degree: 26"}, {"color": "#bbd7fe", "id": 476256944, "label": "Dianne Feinstein", "shape": "dot", "size": 5, "title": "Dianne Feinstein | Followers: 64412 | Degree: 16"}, {"color": "#bbd7fe", "id": 17494010, "label": "Charles E. Schumer", "shape": "dot", "size": 7, "title": "Charles E. Schumer | Followers: 125204 | Degree: 20"}, {"color": "#fda2a4", "id": 1074480192, "label": "Ted Cruz", "shape": "dot", "size": 14, "title": "Ted Cruz | Followers: 647230 | Degree: 17"}, {"color": "#bbd7fe", "id": 970207298, "label": "Elizabeth Warren", "shape": "dot", "size": 11, "title": "Elizabeth Warren | Followers: 413181 | Degree: 20"}, {"color": "#bbd7fe", "id": 14135426, "label": "Keith Ellison", "shape": "dot", "size": 5, "title": "Keith Ellison | Followers: 71240 | Degree: 13"}, {"color": "#fda2a4", "id": 339822881, "label": "Mitch McConnell", "shape": "dot", "size": 5, "title": "Mitch McConnell | Followers: 62032 | Degree: 10"}, {"color": "#bbd7fe", "id": 15764644, "label": "Nancy Pelosi", "shape": "dot", "size": 14, "title": "Nancy Pelosi | Followers: 722010 | Degree: 14"}, {"color": "#bbd7fe", "id": 29450962, "label": "John Lewis", "shape": "dot", "size": 6, "title": "John Lewis | Followers: 94319 | Degree: 8"}, {"color": "#fda2a4", "id": 22055226, "label": "Louie Gohmert", "shape": "dot", "size": 5, "title": "Louie Gohmert | Followers: 53871 | Degree: 10"}, {"color": "#fda2a4", "id": 14275291, "label": "Ileana Ros-Lehtinen", "shape": "dot", "size": 5, "title": "Ileana Ros-Lehtinen | Followers: 75671 | Degree: 7"}, {"color": "#bbd7fe", "id": 18695134, "label": "Robert Menendez", "shape": "dot", "size": 5, "title": "Robert Menendez | Followers: 52242 | Degree: 19"}, {"color": "#bbd7fe", "id": 16789970, "label": "Harry Reid", "shape": "dot", "size": 10, "title": "Harry Reid | Followers: 305128 | Degree: 20"}, {"color": "#bbd7fe", "id": 72198806, "label": "Kirsten E. Gillibrand", "shape": "dot", "size": 8, "title": "Kirsten E. Gillibrand | Followers: 159854 | Degree: 19"}, {"color": "#c6f1ba", "id": 29442313, "label": "Bernard Sanders", "shape": "dot", "size": 18, "title": "Bernard Sanders | Followers: 1203064 | Degree: 17"}, {"color": "#bbd7fe", "id": 43910797, "label": "Sherrod Brown", "shape": "dot", "size": 5, "title": "Sherrod Brown | Followers: 53023 | Degree: 15"}, {"color": "#fda2a4", "id": 18916432, "label": "Paul Ryan", "shape": "dot", "size": 13, "title": "Paul Ryan | Followers: 550378 | Degree: 13"}, {"color": "#fda2a4", "id": 237348797, "label": "Trey Gowdy", "shape": "dot", "size": 9, "title": "Trey Gowdy | Followers: 248654 | Degree: 10"}, {"color": "#bbd7fe", "id": 22012091, "label": "Steny H. Hoyer", "shape": "dot", "size": 5, "title": "Steny H. Hoyer | Followers: 53433 | Degree: 16"}, {"color": "#bbd7fe", "id": 15442036, "label": "Barbara Boxer", "shape": "dot", "size": 5, "title": "Barbara Boxer | Followers: 70346 | Degree: 16"}]);
+        edges = new vis.DataSet([{"from": 10615232, "to": 22509548, "weight": 1}, {"from": 10615232, "to": 14845376, "weight": 1}, {"from": 10615232, "to": 17800215, "weight": 1}, {"from": 10615232, "to": 13218102, "weight": 1}, {"from": 10615232, "to": 7429102, "weight": 1}, {"from": 10615232, "to": 19394188, "weight": 1}, {"from": 10615232, "to": 88784440, "weight": 1}, {"from": 10615232, "to": 19739126, "weight": 1}, {"from": 10615232, "to": 247334603, "weight": 1}, {"from": 10615232, "to": 217543151, "weight": 1}, {"from": 10615232, "to": 476256944, "weight": 1}, {"from": 10615232, "to": 17494010, "weight": 1}, {"from": 10615232, "to": 1074480192, "weight": 1}, {"from": 10615232, "to": 970207298, "weight": 1}, {"from": 22509548, "to": 19739126, "weight": 1}, {"from": 22509548, "to": 14845376, "weight": 1}, {"from": 22509548, "to": 17800215, "weight": 1}, {"from": 22509548, "to": 13218102, "weight": 1}, {"from": 22509548, "to": 14135426, "weight": 1}, {"from": 22509548, "to": 7429102, "weight": 1}, {"from": 22509548, "to": 339822881, "weight": 1}, {"from": 22509548, "to": 15764644, "weight": 1}, {"from": 22509548, "to": 29450962, "weight": 1}, {"from": 22509548, "to": 22055226, "weight": 1}, {"from": 22509548, "to": 14275291, "weight": 1}, {"from": 22509548, "to": 247334603, "weight": 1}, {"from": 22509548, "to": 18695134, "weight": 1}, {"from": 22509548, "to": 16789970, "weight": 1}, {"from": 22509548, "to": 217543151, "weight": 1}, {"from": 22509548, "to": 72198806, "weight": 1}, {"from": 22509548, "to": 19394188, "weight": 1}, {"from": 22509548, "to": 88784440, "weight": 1}, {"from": 22509548, "to": 29442313, "weight": 1}, {"from": 22509548, "to": 43910797, "weight": 1}, {"from": 22509548, "to": 1074480192, "weight": 1}, {"from": 22509548, "to": 18916432, "weight": 1}, {"from": 22509548, "to": 237348797, "weight": 1}, {"from": 22509548, "to": 22012091, "weight": 1}, {"from": 14845376, "to": 19739126, "weight": 1}, {"from": 14845376, "to": 17800215, "weight": 1}, {"from": 14845376, "to": 13218102, "weight": 1}, {"from": 14845376, "to": 339822881, "weight": 1}, {"from": 14845376, "to": 217543151, "weight": 1}, {"from": 14845376, "to": 19394188, "weight": 1}, {"from": 14845376, "to": 88784440, "weight": 1}, {"from": 14845376, "to": 1074480192, "weight": 1}, {"from": 14845376, "to": 18916432, "weight": 1}, {"from": 14845376, "to": 237348797, "weight": 1}, {"from": 14845376, "to": 7429102, "weight": 1}, {"from": 14845376, "to": 247334603, "weight": 1}, {"from": 14845376, "to": 18695134, "weight": 1}, {"from": 14845376, "to": 17494010, "weight": 1}, {"from": 14845376, "to": 970207298, "weight": 1}, {"from": 17800215, "to": 19739126, "weight": 1}, {"from": 17800215, "to": 13218102, "weight": 1}, {"from": 17800215, "to": 339822881, "weight": 1}, {"from": 17800215, "to": 15764644, "weight": 1}, {"from": 17800215, "to": 22055226, "weight": 1}, {"from": 17800215, "to": 14275291, "weight": 1}, {"from": 17800215, "to": 217543151, "weight": 1}, {"from": 17800215, "to": 19394188, "weight": 1}, {"from": 17800215, "to": 88784440, "weight": 1}, {"from": 17800215, "to": 18916432, "weight": 1}, {"from": 17800215, "to": 237348797, "weight": 1}, {"from": 17800215, "to": 1074480192, "weight": 1}, {"from": 13218102, "to": 19739126, "weight": 1}, {"from": 13218102, "to": 7429102, "weight": 1}, {"from": 13218102, "to": 339822881, "weight": 1}, {"from": 13218102, "to": 22055226, "weight": 1}, {"from": 13218102, "to": 14275291, "weight": 1}, {"from": 13218102, "to": 15442036, "weight": 1}, {"from": 13218102, "to": 247334603, "weight": 1}, {"from": 13218102, "to": 18695134, "weight": 1}, {"from": 13218102, "to": 16789970, "weight": 1}, {"from": 13218102, "to": 217543151, "weight": 1}, {"from": 13218102, "to": 476256944, "weight": 1}, {"from": 13218102, "to": 72198806, "weight": 1}, {"from": 13218102, "to": 19394188, "weight": 1}, {"from": 13218102, "to": 88784440, "weight": 1}, {"from": 13218102, "to": 29442313, "weight": 1}, {"from": 13218102, "to": 17494010, "weight": 1}, {"from": 13218102, "to": 43910797, "weight": 1}, {"from": 13218102, "to": 1074480192, "weight": 1}, {"from": 13218102, "to": 18916432, "weight": 1}, {"from": 13218102, "to": 237348797, "weight": 1}, {"from": 13218102, "to": 22012091, "weight": 1}, {"from": 7429102, "to": 15764644, "weight": 1}, {"from": 7429102, "to": 15442036, "weight": 1}, {"from": 7429102, "to": 247334603, "weight": 1}, {"from": 7429102, "to": 18695134, "weight": 1}, {"from": 7429102, "to": 16789970, "weight": 1}, {"from": 7429102, "to": 217543151, "weight": 1}, {"from": 7429102, "to": 476256944, "weight": 1}, {"from": 7429102, "to": 72198806, "weight": 1}, {"from": 7429102, "to": 88784440, "weight": 1}, {"from": 7429102, "to": 17494010, "weight": 1}, {"from": 7429102, "to": 43910797, "weight": 1}, {"from": 7429102, "to": 22012091, "weight": 1}, {"from": 7429102, "to": 970207298, "weight": 1}, {"from": 19394188, "to": 19739126, "weight": 1}, {"from": 19394188, "to": 14135426, "weight": 1}, {"from": 19394188, "to": 22055226, "weight": 1}, {"from": 19394188, "to": 247334603, "weight": 1}, {"from": 19394188, "to": 18695134, "weight": 1}, {"from": 19394188, "to": 217543151, "weight": 1}, {"from": 19394188, "to": 16789970, "weight": 1}, {"from": 19394188, "to": 18916432, "weight": 1}, {"from": 19394188, "to": 88784440, "weight": 1}, {"from": 19394188, "to": 29442313, "weight": 1}, {"from": 19394188, "to": 17494010, "weight": 1}, {"from": 19394188, "to": 1074480192, "weight": 1}, {"from": 19394188, "to": 970207298, "weight": 1}, {"from": 19394188, "to": 237348797, "weight": 1}, {"from": 88784440, "to": 19739126, "weight": 1}, {"from": 88784440, "to": 22055226, "weight": 1}, {"from": 88784440, "to": 247334603, "weight": 1}, {"from": 88784440, "to": 217543151, "weight": 1}, {"from": 88784440, "to": 339822881, "weight": 1}, {"from": 88784440, "to": 15442036, "weight": 1}, {"from": 88784440, "to": 18695134, "weight": 1}, {"from": 88784440, "to": 16789970, "weight": 1}, {"from": 88784440, "to": 72198806, "weight": 1}, {"from": 88784440, "to": 29442313, "weight": 1}, {"from": 88784440, "to": 17494010, "weight": 1}, {"from": 88784440, "to": 43910797, "weight": 1}, {"from": 88784440, "to": 1074480192, "weight": 1}, {"from": 88784440, "to": 18916432, "weight": 1}, {"from": 88784440, "to": 237348797, "weight": 1}, {"from": 88784440, "to": 970207298, "weight": 1}, {"from": 19739126, "to": 339822881, "weight": 1}, {"from": 19739126, "to": 22055226, "weight": 1}, {"from": 19739126, "to": 14275291, "weight": 1}, {"from": 19739126, "to": 16789970, "weight": 1}, {"from": 19739126, "to": 217543151, "weight": 1}, {"from": 19739126, "to": 17494010, "weight": 1}, {"from": 19739126, "to": 1074480192, "weight": 1}, {"from": 19739126, "to": 18916432, "weight": 1}, {"from": 19739126, "to": 237348797, "weight": 1}, {"from": 19739126, "to": 22012091, "weight": 1}, {"from": 14135426, "to": 15764644, "weight": 1}, {"from": 14135426, "to": 29450962, "weight": 1}, {"from": 14135426, "to": 15442036, "weight": 1}, {"from": 14135426, "to": 247334603, "weight": 1}, {"from": 14135426, "to": 16789970, "weight": 1}, {"from": 14135426, "to": 476256944, "weight": 1}, {"from": 14135426, "to": 72198806, "weight": 1}, {"from": 14135426, "to": 29442313, "weight": 1}, {"from": 14135426, "to": 17494010, "weight": 1}, {"from": 14135426, "to": 970207298, "weight": 1}, {"from": 14135426, "to": 22012091, "weight": 1}, {"from": 339822881, "to": 18916432, "weight": 1}, {"from": 339822881, "to": 217543151, "weight": 1}, {"from": 339822881, "to": 1074480192, "weight": 1}, {"from": 339822881, "to": 970207298, "weight": 1}, {"from": 15764644, "to": 29450962, "weight": 1}, {"from": 15764644, "to": 15442036, "weight": 1}, {"from": 15764644, "to": 16789970, "weight": 1}, {"from": 15764644, "to": 970207298, "weight": 1}, {"from": 15764644, "to": 22012091, "weight": 1}, {"from": 15764644, "to": 247334603, "weight": 1}, {"from": 15764644, "to": 18695134, "weight": 1}, {"from": 15764644, "to": 476256944, "weight": 1}, {"from": 15764644, "to": 72198806, "weight": 1}, {"from": 15764644, "to": 17494010, "weight": 1}, {"from": 29450962, "to": 16789970, "weight": 1}, {"from": 29450962, "to": 72198806, "weight": 1}, {"from": 29450962, "to": 22012091, "weight": 1}, {"from": 29450962, "to": 217543151, "weight": 1}, {"from": 29450962, "to": 970207298, "weight": 1}, {"from": 22055226, "to": 217543151, "weight": 1}, {"from": 22055226, "to": 1074480192, "weight": 1}, {"from": 22055226, "to": 18916432, "weight": 1}, {"from": 22055226, "to": 237348797, "weight": 1}, {"from": 14275291, "to": 18916432, "weight": 1}, {"from": 14275291, "to": 247334603, "weight": 1}, {"from": 14275291, "to": 217543151, "weight": 1}, {"from": 247334603, "to": 15442036, "weight": 1}, {"from": 247334603, "to": 18695134, "weight": 1}, {"from": 247334603, "to": 16789970, "weight": 1}, {"from": 247334603, "to": 476256944, "weight": 1}, {"from": 247334603, "to": 29442313, "weight": 1}, {"from": 247334603, "to": 17494010, "weight": 1}, {"from": 247334603, "to": 43910797, "weight": 1}, {"from": 247334603, "to": 1074480192, "weight": 1}, {"from": 247334603, "to": 970207298, "weight": 1}, {"from": 247334603, "to": 22012091, "weight": 1}, {"from": 247334603, "to": 217543151, "weight": 1}, {"from": 247334603, "to": 72198806, "weight": 1}, {"from": 18695134, "to": 15442036, "weight": 1}, {"from": 18695134, "to": 16789970, "weight": 1}, {"from": 18695134, "to": 217543151, "weight": 1}, {"from": 18695134, "to": 476256944, "weight": 1}, {"from": 18695134, "to": 72198806, "weight": 1}, {"from": 18695134, "to": 29442313, "weight": 1}, {"from": 18695134, "to": 17494010, "weight": 1}, {"from": 18695134, "to": 43910797, "weight": 1}, {"from": 18695134, "to": 970207298, "weight": 1}, {"from": 18695134, "to": 22012091, "weight": 1}, {"from": 18695134, "to": 1074480192, "weight": 1}, {"from": 16789970, "to": 15442036, "weight": 1}, {"from": 16789970, "to": 476256944, "weight": 1}, {"from": 16789970, "to": 29442313, "weight": 1}, {"from": 16789970, "to": 17494010, "weight": 1}, {"from": 16789970, "to": 43910797, "weight": 1}, {"from": 16789970, "to": 970207298, "weight": 1}, {"from": 16789970, "to": 217543151, "weight": 1}, {"from": 16789970, "to": 72198806, "weight": 1}, {"from": 16789970, "to": 22012091, "weight": 1}, {"from": 217543151, "to": 15442036, "weight": 1}, {"from": 217543151, "to": 476256944, "weight": 1}, {"from": 217543151, "to": 72198806, "weight": 1}, {"from": 217543151, "to": 29442313, "weight": 1}, {"from": 217543151, "to": 17494010, "weight": 1}, {"from": 217543151, "to": 43910797, "weight": 1}, {"from": 217543151, "to": 1074480192, "weight": 1}, {"from": 217543151, "to": 970207298, "weight": 1}, {"from": 217543151, "to": 18916432, "weight": 1}, {"from": 217543151, "to": 237348797, "weight": 1}, {"from": 72198806, "to": 15442036, "weight": 1}, {"from": 72198806, "to": 476256944, "weight": 1}, {"from": 72198806, "to": 29442313, "weight": 1}, {"from": 72198806, "to": 17494010, "weight": 1}, {"from": 72198806, "to": 43910797, "weight": 1}, {"from": 72198806, "to": 970207298, "weight": 1}, {"from": 72198806, "to": 1074480192, "weight": 1}, {"from": 72198806, "to": 22012091, "weight": 1}, {"from": 29442313, "to": 15442036, "weight": 1}, {"from": 29442313, "to": 476256944, "weight": 1}, {"from": 29442313, "to": 17494010, "weight": 1}, {"from": 29442313, "to": 43910797, "weight": 1}, {"from": 29442313, "to": 970207298, "weight": 1}, {"from": 29442313, "to": 1074480192, "weight": 1}, {"from": 29442313, "to": 22012091, "weight": 1}, {"from": 43910797, "to": 15442036, "weight": 1}, {"from": 43910797, "to": 476256944, "weight": 1}, {"from": 43910797, "to": 17494010, "weight": 1}, {"from": 43910797, "to": 970207298, "weight": 1}, {"from": 43910797, "to": 22012091, "weight": 1}, {"from": 1074480192, "to": 18916432, "weight": 1}, {"from": 1074480192, "to": 970207298, "weight": 1}, {"from": 18916432, "to": 237348797, "weight": 1}, {"from": 22012091, "to": 17494010, "weight": 1}, {"from": 22012091, "to": 15442036, "weight": 1}, {"from": 22012091, "to": 476256944, "weight": 1}, {"from": 17494010, "to": 15442036, "weight": 1}, {"from": 17494010, "to": 476256944, "weight": 1}, {"from": 17494010, "to": 970207298, "weight": 1}, {"from": 15442036, "to": 476256944, "weight": 1}, {"from": 15442036, "to": 970207298, "weight": 1}, {"from": 476256944, "to": 970207298, "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": -10,
+            "centralGravity": 0,
+            "damping": 0.09,
+            "gravitationalConstant": -10000,
+            "springConstant": 0.04,
+            "springLength": 180
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
