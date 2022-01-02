@@ -2,7 +2,7 @@
 Datasets and visualizations were cleaned and produced using Pandas, NumPy, Altair, MatPlotLib, and NetworkX and PyVis (networks) libraries in Python and were created for DATA 22700: Data Visualization and Communication, a data science elective at UChicago. Below are a sample of some highlighted visualizations and corresponding analysis. 
 
 ### Twitter Interactions Between the Most-Followed U.S. Congresspeople
-Data Source: Pablo Barbera (GitHub: pablobarbera), “Data Science Workshop - Congress Twitter Network,” https://github.com/pablobarbera/data-science-workshop/tree/master/sna/data. Note: though the source does not specify when the data was pulled from Twitter, the files were uploaded to GitHub in 2015, which is assumed to be the year of data collection.*
+Data Source: Pablo Barbera (GitHub: pablobarbera), “Data Science Workshop - Congress Twitter Network,” https://github.com/pablobarbera/data-science-workshop/tree/master/sna/data. Note: though the source does not specify when the data was pulled from Twitter, the files were uploaded to GitHub in 2015, which is assumed to be the year of data collection.
 
 <p align="center"><img width="468" alt="congress_twitter_network" src="https://user-images.githubusercontent.com/72634325/147860824-5acf62cc-aaa1-4f2d-afe1-37358226de91.png"></p>
 
